@@ -1,4 +1,6 @@
-<app-task-form [task]="task" (add)="handleAdd($event)" (update)="handleUpdate($event)"></app-task-form>
-<app-task-clear [tasks]="tasks" (removeAll)="handleRemoveAll()"></app-task-clear>
-<app-task-list [tasks]="tasks" (edit)="handleEditTask($event)" (remove)="handleRemoveTask($event)"></app-task-list>
-<app-task-empty [tasks]="tasks"></app-task-empty>
+<div class="task-group" [class.disable]="disable">
+  <app-task-form></app-task-form>
+  <app-task-clear></app-task-clear>
+  <app-task-list></app-task-list>
+  <app-task-empty></app-task-empty>
+</div>

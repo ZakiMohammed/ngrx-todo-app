@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { map, catchError, of, finalize } from 'rxjs';
-import { Task } from 'src/app/models/task';
+import { TaskHttpService } from 'src/app/http/task.http.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import { TaskService } from 'src/app/services/task.service';
 
@@ -9,17 +9,22 @@ import { TaskService } from 'src/app/services/task.service';
   templateUrl: './task-clear.component.html',
 })
 export class TaskClearComponent {
-  @Input() tasks: Task[] = [];
-  @Output() removeAll = new EventEmitter();
+  constructor(
+    private taskService: TaskService,
+    private taskHttpService: TaskHttpService,
+    private spinnerService: SpinnerService
+  ) {}
 
-  constructor(private taskService: TaskService, private spinnerService: SpinnerService) {}
+  get tasks() {
+    return this.taskService.tasks;
+  }
 
   handleRemoveTask() {
     this.spinnerService.setLoading(true);
-    this.taskService
+    this.taskHttpService
       .removeAll(this.tasks.map(i => i._id))
       .pipe(
-        map(() => this.removeAll.emit()),
+        map(() => (this.taskService.tasks = [])),
         catchError(err => of(alert(err.message))),
         finalize(() => this.spinnerService.setLoading(false))
       )

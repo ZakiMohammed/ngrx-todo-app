@@ -1,20 +1,33 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Task } from 'src/app/models/task';
+import { Component, OnInit } from '@angular/core';
+import { map, catchError, of, finalize } from 'rxjs';
+import { TaskHttpService } from 'src/app/http/task.http.service';
+import { SpinnerService } from 'src/app/services/spinner.service';
+import { TaskService } from 'src/app/services/task.service';
 
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
 })
-export class TaskListComponent {
-  @Input() tasks: Task[] = [];
-  @Output() edit = new EventEmitter<Task>();
-  @Output() remove = new EventEmitter<Task>();
+export class TaskListComponent implements OnInit {
+  constructor(
+    private taskService: TaskService,
+    private taskHttpService: TaskHttpService,
+    private spinnerService: SpinnerService
+  ) {}
 
-  handleEditTask(task: Task) {
-    this.edit.emit(task);
+  get tasks() {
+    return this.taskService.tasks;
   }
 
-  handleRemoveTask(task: Task) {
-    this.remove.emit(task);
+  ngOnInit(): void {
+    this.spinnerService.setLoading(true);
+    this.taskHttpService
+      .getAll()
+      .pipe(
+        map(res => (this.taskService.tasks = res)),
+        catchError(err => of(alert(err.message))),
+        finalize(() => this.spinnerService.setLoading(false))
+      )
+      .subscribe();
   }
 }

@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { map, catchError, of, finalize } from 'rxjs';
+import { TaskHttpService } from 'src/app/http/task.http.service';
 import { Task } from 'src/app/models/task';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import { TaskService } from 'src/app/services/task.service';
@@ -10,21 +11,26 @@ import { TaskService } from 'src/app/services/task.service';
 })
 export class TaskItemComponent {
   @Input() task!: Task;
-  @Output() edit = new EventEmitter<Task>();
-  @Output() remove = new EventEmitter<Task>();
 
-  constructor(private taskService: TaskService, private spinnerService: SpinnerService) {}
+  constructor(
+    private taskService: TaskService,
+    private taskHttpService: TaskHttpService,
+    private spinnerService: SpinnerService
+  ) {}
 
   handleEditTask() {
-    this.edit.emit(this.task);
+    this.taskService.task.next(this.task);
   }
 
   handleRemoveTask() {
     this.spinnerService.setLoading(true);
-    this.taskService
+    this.taskHttpService
       .remove(this.task._id)
       .pipe(
-        map(() => this.remove.emit(this.task)),
+        map(() => {
+          const index = this.taskService.tasks.findIndex(i => i._id === this.task._id);
+          this.taskService.tasks.splice(index, 1);
+        }),
         catchError(err => of(alert(err.message))),
         finalize(() => this.spinnerService.setLoading(false))
       )

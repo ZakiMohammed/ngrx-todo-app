@@ -1,16 +1,16 @@
 {
   "todos": [
     {
-      "title": "Redux",
-      "_id": 1
+      "_id": 1,
+      "title": "State Management"
     },
     {
-      "title": "Woo",
-      "_id": 2
+      "_id": 2,
+      "title": "Redux"
     },
     {
-      "title": "Python",
-      "_id": 3
+      "_id": 3,
+      "title": "Context API"
     }
   ]
 }

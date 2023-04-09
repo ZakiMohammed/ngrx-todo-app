@@ -1,35 +1,11 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { Task } from '../models/task';
-import { forkJoin } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  private url: string = `${environment.apiUrl}todos`;
-
-  constructor(private http: HttpClient) {}
-
-  getAll() {
-    return this.http.get<Task[]>(this.url);
-  }
-
-  add(task: Partial<Task>) {
-    return this.http.post<Task>(this.url, task);
-  }
-
-  update(id: string, task: Task) {
-    return this.http.put<Task>(`${this.url}/${id}`, task);
-  }
-
-  remove(id: string) {
-    return this.http.delete(`${this.url}/${id}`);
-  }
-
-  removeAll(ids: string[]) {
-    const deletes = ids.map(id => this.http.delete(`${this.url}/${id}`))
-    return forkJoin(deletes);
-  }
+  tasks: Task[] = [];
+  task = new BehaviorSubject<Task | null>(null);
 }

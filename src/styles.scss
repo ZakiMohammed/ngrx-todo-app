@@ -4,6 +4,7 @@
     - IMPORTS
     - GLOBAL
     - CONTAINER
+    - TASK-GROUP
     - FORM
     - CARD
     - EMPTY
@@ -90,6 +91,31 @@ body {
     margin: 50px 300px;
   }
 }
+
+/* TASK-GROUP
+---------------------------------------------------------------------- */
+.task-group {
+  &.disable {
+    app-task-list {
+      cursor: not-allowed;
+
+      app-task-item {
+        pointer-events: none;
+        opacity: 0.4;
+      }
+    }
+
+    app-task-clear {
+      cursor: not-allowed;
+
+      .btn-clear {
+        pointer-events: none;
+        opacity: 0.4;
+      }
+    }
+  }
+}
+
 
 /* FORM
 ---------------------------------------------------------------------- */
