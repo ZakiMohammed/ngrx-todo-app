@@ -59,20 +59,20 @@ body {
   margin: 50px 20px;
 }
 
-.container > h1 {
+.container app-header > h1 {
   text-align: center;
   color: #e84393;
   margin: 0;
   margin-bottom: 5px;
 }
 
-.container > h5 {
+.container app-header > h5 {
   text-align: center;
   margin: 0;
   margin-bottom: 20px;
 }
 
-.container > h5 a {
+.container app-header > h5 a {
   text-decoration: none;
   padding: 0.5rem;
 }
@@ -127,9 +127,12 @@ body {
 }
 
 .form button svg {
-  fill: #fff;
   font-size: 18px;
   vertical-align: middle;
+
+  path {
+    fill: #fff;
+  }
 }
 
 /* CARD
@@ -182,14 +185,17 @@ body {
 .card .btn-remove svg,
 .card .btn-edit svg {
   vertical-align: middle;
-  fill: #fff;
+
+  path {
+    fill: #fff;
+  }
 }
 
 .card-holder {
   margin-top: 20px;
 }
 
-.card-holder .card:last-child {
+.card-holder app-task-item:last-child {
   margin-bottom: 0;
 }
 
@@ -205,8 +211,11 @@ body {
 .empty svg {
   display: block;
   text-align: center;
-  fill: #aaa;
   margin: 0 auto 5px;
+
+  path {
+    fill: #aaa;
+  }
 }
 
 /* CLEAR
@@ -222,7 +231,7 @@ body {
   cursor: pointer;
 }
 
-.btn-clear svg {
+.btn-clear svg path {
   fill: #777;
 }
 
@@ -241,7 +250,10 @@ body {
 
 .loader svg {
   animation: spin infinite 2s linear;
-  fill: #e84393;
+
+  path {
+    fill: #e84393;
+  }
 }
 
 @keyframes spin {

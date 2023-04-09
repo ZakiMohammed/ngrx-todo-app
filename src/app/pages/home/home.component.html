@@ -1,0 +1,6 @@
+<app-task-form></app-task-form>
+<ng-container *ngIf="tasks$ | async as tasks">
+  <app-task-clear [tasks]="tasks"></app-task-clear>
+  <app-task-list [tasks]="tasks"></app-task-list>
+  <app-task-empty [tasks]="tasks"></app-task-empty>
+</ng-container>
