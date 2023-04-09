@@ -16,19 +16,19 @@ export class TaskService {
     return this.http.get<Task[]>(this.url);
   }
 
-  add(task: Task) {
-    return this.http.post(this.url, task);
+  add(task: Partial<Task>) {
+    return this.http.post<Task>(this.url, task);
   }
 
-  update(id: number, task: Task) {
-    return this.http.put(`${this.url}/${id}`, task);
+  update(id: string, task: Task) {
+    return this.http.put<Task>(`${this.url}/${id}`, task);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.http.delete(`${this.url}/${id}`);
   }
 
-  removeAll(ids: number[]) {
+  removeAll(ids: string[]) {
     const deletes = ids.map(id => this.http.delete(`${this.url}/${id}`))
     return forkJoin(deletes);
   }

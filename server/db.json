@@ -1,16 +1,16 @@
 {
   "todos": [
     {
-      "_id": "64326916cc99aa92789117d0",
-      "title": "Ma. Francisco"
+      "title": "Redux",
+      "_id": 1
     },
     {
-      "title": "Ngrx Angular",
-      "_id": "E63uzF7"
+      "title": "Woo",
+      "_id": 2
     },
     {
-      "title": "Redux Toolkit",
-      "_id": "Upyj2lx"
+      "title": "Python",
+      "_id": 3
     }
   ]
 }
