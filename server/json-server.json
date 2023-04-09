@@ -1,0 +1,6 @@
+{
+  "port": 3000,
+  "routes": "server/routes.json",
+  "watch": true,
+  "id": "_id"
+}

@@ -1,1 +1,255 @@
-/* You can add global styles to this file, and also import other style files */
+/* 
+    TABLE CONTENT
+    - COLORS
+    - IMPORTS
+    - GLOBAL
+    - CONTAINER
+    - FORM
+    - CARD
+    - EMPTY
+    - CLEAR
+    - LOADER
+*/
+
+/* COLORS
+---------------------------------------------------------------------- */
+/* 
+    https://flatuicolors.com/palette/us
+    primary: #e84393
+    secondary: #fd79a8
+    background: #dfe6e9
+    reading: #2d3436
+*/
+
+/* IMPORTS
+---------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* GLOBAL
+---------------------------------------------------------------------- */
+* {
+  font-family: 'Poppins', sans-serif;
+  color: #2d3436;
+}
+
+body {
+  background-color: #dfe6e9;
+  margin: 0;
+}
+
+.btn-back {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #b2bec3;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.btn-back:hover {
+  background-color: #dfe6e9;
+}
+
+.d-none {
+  display: none !important;
+}
+
+/* CONTAINER
+---------------------------------------------------------------------- */
+.container {
+  margin: 50px 20px;
+}
+
+.container > h1 {
+  text-align: center;
+  color: #e84393;
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.container > h5 {
+  text-align: center;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.container > h5 a {
+  text-decoration: none;
+  padding: 0.5rem;
+}
+
+/* medium to tablet */
+@media (min-width: 900px) and (max-width: 1300px) {
+  .container {
+    margin: 50px 100px;
+  }
+}
+
+/* wide screen */
+@media (min-width: 1301px) {
+  .container {
+    margin: 50px 300px;
+  }
+}
+
+/* FORM
+---------------------------------------------------------------------- */
+.form {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.form input {
+  flex-basis: 90%;
+  height: 40px;
+  padding: 5px 20px;
+  border: none;
+  border-radius: 10px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.form input:focus-visible {
+  outline: #b2bec3 auto 1px;
+}
+
+.form button {
+  flex-basis: 10%;
+  color: #fff;
+  background-color: #e84393;
+  border: none;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form button:hover {
+  background-color: #fd79a8;
+}
+
+.form button svg {
+  fill: #fff;
+  font-size: 18px;
+  vertical-align: middle;
+}
+
+/* CARD
+---------------------------------------------------------------------- */
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+}
+
+.card h4 {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.card p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.card .btn-remove,
+.card .btn-edit {
+  background-color: #ff7675;
+  border: 1px solid #ff7675;
+  color: #fff;
+  padding: 0px 8px;
+  border-radius: 10px;
+  float: right;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.card .btn-remove:hover,
+.card .btn-edit:hover {
+  background-color: #fab1a0;
+  border: 1px solid #fab1a0;
+}
+
+.card .btn-edit {
+  background-color: #fdcb6e;
+  border-color: #fdcb6e;
+}
+
+.card .btn-edit:hover {
+  background-color: #ffeaa7;
+  border-color: #ffeaa7;
+}
+
+.card .btn-remove svg,
+.card .btn-edit svg {
+  vertical-align: middle;
+  fill: #fff;
+}
+
+.card-holder {
+  margin-top: 20px;
+}
+
+.card-holder .card:last-child {
+  margin-bottom: 0;
+}
+
+/* EMPTY
+---------------------------------------------------------------------- */
+.empty {
+  text-align: center;
+  color: #aaa;
+  font-size: 14px;
+  padding: 50px 0;
+}
+
+.empty svg {
+  display: block;
+  text-align: center;
+  fill: #aaa;
+  margin: 0 auto 5px;
+}
+
+/* CLEAR
+---------------------------------------------------------------------- */
+.btn-clear {
+  background-color: transparent;
+  border: none;
+  font-size: 12px;
+  padding: 0;
+  color: #777;
+  text-align: right;
+  width: 100%;
+  cursor: pointer;
+}
+
+.btn-clear svg {
+  fill: #777;
+}
+
+/* LOADER
+---------------------------------------------------------------------- */
+.loader {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.loader svg {
+  animation: spin infinite 2s linear;
+  fill: #e84393;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
