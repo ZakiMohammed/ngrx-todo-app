@@ -21,6 +21,8 @@ import { TaskListComponent } from './components/task/task-list/task-list.compone
 import { TaskEmptyComponent } from './components/task/task-empty/task-empty.component';
 import { TaskItemComponent } from './components/task/task-item/task-item.component';
 import { FormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './store';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,14 @@ import { FormsModule } from '@angular/forms';
     TaskEmptyComponent,
     TaskItemComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, FontAwesomeModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    AppRoutingModule,
+    FontAwesomeModule,
+    StoreModule.forRoot(reducers),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

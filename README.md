@@ -5,7 +5,7 @@ A Vanilla Angular Todo App without any state management package.
 ## Initial Setup
 
 ```
-ng new ng-vanilla-todo-app
+ng new ngrx-todo-app
 ```
 
 ## JSON Server
@@ -100,4 +100,11 @@ Usage:
 ```
 <fa-icon icon="coffee"></fa-icon>
 <fa-icon [icon]="['fab', 'angular']" size="lg"></fa-icon>
+```
+
+## NgRx
+
+Adding NgRx package:
+```
+ng add @ngrx/store@latest --no-minimal --statePath store
 ```
