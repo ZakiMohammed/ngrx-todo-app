@@ -1,6 +1,6 @@
 import { ActionReducerMap, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import { Task } from '../models/task';
-import { addTask, removeAllTask, removeTask, setLoading, updateTask } from './actions';
+import { addTask, editTask, getAllTask, removeAllTask, removeTask, setLoading, updateTask } from './actions';
 
 export interface State {}
 
@@ -26,25 +26,35 @@ export const getTask = createSelector(getTaskState, state => state.task);
 
 export const taskReducer = createReducer<TaskState>(
   initialState,
+  on(getAllTask, (state, action): TaskState => {
+    return {
+      ...state,
+      tasks: action.tasks,
+    };
+  }),
   on(addTask, (state, action): TaskState => {
     return {
       ...state,
       tasks: [...state.tasks, action.task],
     };
   }),
+  on(editTask, (state, action): TaskState => {
+    return {
+      ...state,
+      task: action.task,
+    };
+  }),
   on(updateTask, (state, action): TaskState => {
-    const index = state.tasks.findIndex(i => i._id === action.task._id);
-    state.tasks[index] = action.task;
     return {
       ...state,
       task: null,
+      tasks: state.tasks.map(i => (i._id === action.task._id ? action.task : i)),
     };
   }),
   on(removeTask, (state, action): TaskState => {
-    const index = state.tasks.findIndex(i => i._id === action.task._id);
-    state.tasks.splice(index, 1);
     return {
       ...state,
+      tasks: state.tasks.filter(i => i._id !== action.task._id),
     };
   }),
   on(removeAllTask, (state): TaskState => {

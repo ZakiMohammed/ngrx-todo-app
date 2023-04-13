@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
-import { TaskService } from 'src/app/services/task.service';
+import { Store } from '@ngrx/store';
+import { Task } from 'src/app/models/task';
+import { TaskState } from 'src/app/store';
 
 @Component({
   selector: 'app-task-empty',
   templateUrl: './task-empty.component.html',
 })
 export class TaskEmptyComponent {
-  constructor(private taskService: TaskService) {}
+  tasks: Task[] = [];
 
-  get tasks() {
-    return this.taskService.tasks;
+  constructor(private store: Store<{ taskReducer: TaskState }>) {
+    store.select('taskReducer').subscribe(state => (this.tasks = state.tasks));
   }
 }

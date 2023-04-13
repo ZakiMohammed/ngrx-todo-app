@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { map, catchError, of, finalize } from 'rxjs';
 import { TaskHttpService } from 'src/app/http/task.http.service';
 import { Task } from 'src/app/models/task';
 import { SpinnerService } from 'src/app/services/spinner.service';
-import { TaskService } from 'src/app/services/task.service';
+import { TaskState } from 'src/app/store';
+import { addTask, updateTask } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-task-form',
@@ -14,13 +16,13 @@ export class TaskFormComponent {
   title = '';
 
   constructor(
-    private taskService: TaskService,
+    private store: Store<{ taskReducer: TaskState }>,
     private taskHttpService: TaskHttpService,
     private spinnerService: SpinnerService
   ) {
-    this.taskService.task.subscribe(task => {
-      this.task = task;
-      this.title = task ? task.title : this.title;
+    this.store.select('taskReducer').subscribe(state => {
+      this.task = state.task ? { ...state.task } : null;
+      this.title = state.task ? state.task.title : this.title;
     });
   }
 
@@ -42,7 +44,7 @@ export class TaskFormComponent {
         .add(newTask)
         .pipe(
           map(task => {
-            this.taskService.tasks.push(task);
+            this.store.dispatch(addTask({ task }));
             this.title = '';
           }),
           catchError(err => of(alert(err.message))),
@@ -56,10 +58,7 @@ export class TaskFormComponent {
         .update(this.task._id, this.task)
         .pipe(
           map(task => {
-            const index = this.taskService.tasks.findIndex(i => i._id === task._id);
-            this.taskService.tasks[index] = task;
-
-            this.taskService.task.next(null);
+            this.store.dispatch(updateTask({ task }));
             this.title = '';
           }),
           catchError(err => of(alert(err.message))),

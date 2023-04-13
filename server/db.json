@@ -2,15 +2,15 @@
   "todos": [
     {
       "_id": 1,
-      "title": "State Management"
+      "title": "Learning JS"
     },
     {
       "_id": 2,
-      "title": "Redux"
+      "title": "Learning TS"
     },
     {
       "_id": 3,
-      "title": "Context API"
+      "title": "Exploring Redux"
     }
   ]
 }

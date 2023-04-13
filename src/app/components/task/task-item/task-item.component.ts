@@ -1,9 +1,11 @@
 import { Component, Input } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { map, catchError, of, finalize } from 'rxjs';
 import { TaskHttpService } from 'src/app/http/task.http.service';
 import { Task } from 'src/app/models/task';
 import { SpinnerService } from 'src/app/services/spinner.service';
-import { TaskService } from 'src/app/services/task.service';
+import { TaskState } from 'src/app/store';
+import { editTask, removeTask } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-task-item',
@@ -13,13 +15,13 @@ export class TaskItemComponent {
   @Input() task!: Task;
 
   constructor(
-    private taskService: TaskService,
+    private store: Store<{ taskReducer: TaskState }>,
     private taskHttpService: TaskHttpService,
     private spinnerService: SpinnerService
   ) {}
 
   handleEditTask() {
-    this.taskService.task.next(this.task);
+    this.store.dispatch(editTask({ task: this.task }));
   }
 
   handleRemoveTask() {
@@ -27,10 +29,7 @@ export class TaskItemComponent {
     this.taskHttpService
       .remove(this.task._id)
       .pipe(
-        map(() => {
-          const index = this.taskService.tasks.findIndex(i => i._id === this.task._id);
-          this.taskService.tasks.splice(index, 1);
-        }),
+        map(() => this.store.dispatch(removeTask({ task: this.task }))),
         catchError(err => of(alert(err.message))),
         finalize(() => this.spinnerService.setLoading(false))
       )
