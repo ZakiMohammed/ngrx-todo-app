@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { TaskService } from 'src/app/services/task.service';
+import { Store } from '@ngrx/store';
+import { TaskStoreState, getTask } from 'src/app/store';
 
 @Component({
   selector: 'app-home',
@@ -8,8 +9,9 @@ import { TaskService } from 'src/app/services/task.service';
 export class HomeComponent {
   disable = false;
 
-  constructor(private taskService: TaskService) {
-    this.taskService.task.subscribe(task => {
+  constructor(
+    private store: Store<TaskStoreState>) {
+    this.store.select(getTask).subscribe(task => {
       this.disable = !!task;
     })
   }

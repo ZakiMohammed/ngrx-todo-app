@@ -146,10 +146,18 @@ body {
   border-radius: 10px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+
+  &.edit {
+    background-color: #fdcb6e;
+  }
 }
 
 .form button:hover {
   background-color: #fd79a8;
+
+  &.edit {
+    background-color: #ffeaa7;
+  }
 }
 
 .form button svg {

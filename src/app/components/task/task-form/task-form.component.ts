@@ -3,9 +3,8 @@ import { Store } from '@ngrx/store';
 import { map, catchError, of, finalize } from 'rxjs';
 import { TaskHttpService } from 'src/app/http/task.http.service';
 import { Task } from 'src/app/models/task';
-import { SpinnerService } from 'src/app/services/spinner.service';
-import { TaskState } from 'src/app/store';
-import { addTask, updateTask } from 'src/app/store/actions';
+import { TaskStoreState, getTask } from 'src/app/store';
+import { addTask, setLoading, updateTask } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-task-form',
@@ -15,14 +14,10 @@ export class TaskFormComponent {
   task: Task | null = null;
   title = '';
 
-  constructor(
-    private store: Store<{ taskReducer: TaskState }>,
-    private taskHttpService: TaskHttpService,
-    private spinnerService: SpinnerService
-  ) {
-    this.store.select('taskReducer').subscribe(state => {
-      this.task = state.task ? { ...state.task } : null;
-      this.title = state.task ? state.task.title : this.title;
+  constructor(private store: Store<TaskStoreState>, private taskHttpService: TaskHttpService) {
+    this.store.select(getTask).subscribe(task => {
+      this.task = task ? { ...task } : null;
+      this.title = task ? task.title : this.title;
     });
   }
 
@@ -32,7 +27,7 @@ export class TaskFormComponent {
       return;
     }
 
-    this.spinnerService.setLoading(true);
+    this.store.dispatch(setLoading({ loading: true }));
 
     if (!this.task) {
       const newTask: Task = {
@@ -48,7 +43,7 @@ export class TaskFormComponent {
             this.title = '';
           }),
           catchError(err => of(alert(err.message))),
-          finalize(() => this.spinnerService.setLoading(false))
+          finalize(() => this.store.dispatch(setLoading({ loading: false })))
         )
         .subscribe();
     } else {
@@ -62,7 +57,7 @@ export class TaskFormComponent {
             this.title = '';
           }),
           catchError(err => of(alert(err.message))),
-          finalize(() => this.spinnerService.setLoading(false))
+          finalize(() => this.store.dispatch(setLoading({ loading: false })))
         )
         .subscribe();
     }

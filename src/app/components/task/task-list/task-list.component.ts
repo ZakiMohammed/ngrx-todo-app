@@ -3,9 +3,8 @@ import { Store } from '@ngrx/store';
 import { map, catchError, of, finalize } from 'rxjs';
 import { TaskHttpService } from 'src/app/http/task.http.service';
 import { Task } from 'src/app/models/task';
-import { SpinnerService } from 'src/app/services/spinner.service';
-import { TaskState } from 'src/app/store';
-import { getAllTask } from 'src/app/store/actions';
+import { TaskStoreState, getTasks } from 'src/app/store';
+import { getAllTask, setLoading } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-task-list',
@@ -14,22 +13,18 @@ import { getAllTask } from 'src/app/store/actions';
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
 
-  constructor(
-    private store: Store<{ taskReducer: TaskState }>,
-    private taskHttpService: TaskHttpService,
-    private spinnerService: SpinnerService
-  ) {
-    store.select('taskReducer').subscribe(state => (this.tasks = state.tasks));
+  constructor(private store: Store<TaskStoreState>, private taskHttpService: TaskHttpService) {
+    store.select(getTasks).subscribe(tasks => (this.tasks = tasks));
   }
 
   ngOnInit(): void {
-    this.spinnerService.setLoading(true);
+    this.store.dispatch(setLoading({ loading: true }));
     this.taskHttpService
       .getAll()
       .pipe(
         map(res => this.store.dispatch(getAllTask({ tasks: res }))),
         catchError(err => of(alert(err.message))),
-        finalize(() => this.spinnerService.setLoading(false))
+        finalize(() => this.store.dispatch(setLoading({ loading: false })))
       )
       .subscribe();
   }

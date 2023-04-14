@@ -1,6 +1,6 @@
 <form class="form" (submit)="handleSubmit()">
   <input type="text" name="title" placeholder="Enter you task" [(ngModel)]="title" />
-  <button type="submit" title="Add">
+  <button type="submit" title="Add" [ngClass]="{ edit: task }">
     <fa-icon *ngIf="!task" icon="plus"></fa-icon>
     <fa-icon *ngIf="task" icon="pencil"></fa-icon>
   </button>

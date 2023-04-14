@@ -2,15 +2,19 @@
   "todos": [
     {
       "_id": 1,
-      "title": "Learning JS"
+      "title": "Learn Redux"
     },
     {
       "_id": 2,
-      "title": "Learning TS"
+      "title": "Bootstrap v5"
     },
     {
       "_id": 3,
-      "title": "Exploring Redux"
+      "title": "Angular Signals"
+    },
+    {
+      "_id": 4,
+      "title": "Added instrument"
     }
   ]
 }

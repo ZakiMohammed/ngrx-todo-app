@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { SpinnerService } from 'src/app/services/spinner.service';
+import { Store } from '@ngrx/store';
+import { TaskStoreState, getLoading } from 'src/app/store';
 
 @Component({
   selector: 'app-spinner',
   templateUrl: './spinner.component.html',
 })
 export class SpinnerComponent {
-  constructor(private spinnerService: SpinnerService) {}
+  loading = false;
 
-  public get loading() {
-    return this.spinnerService.loading;
+  constructor(private store: Store<TaskStoreState>) {
+    store.select(getLoading).subscribe(loading => (this.loading = loading));
   }
 }

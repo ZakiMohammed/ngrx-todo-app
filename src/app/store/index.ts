@@ -10,13 +10,17 @@ export interface TaskState {
   task: Task | null;
 }
 
+export interface TaskStoreState {
+  taskReducer: TaskState;
+}
+
 const initialState: TaskState = {
   loading: false,
   tasks: [],
   task: null,
 };
 
-const getTaskState = createFeatureSelector<TaskState>('tasks');
+const getTaskState = createFeatureSelector<TaskState>('taskReducer');
 
 export const getLoading = createSelector(getTaskState, state => state.loading);
 
