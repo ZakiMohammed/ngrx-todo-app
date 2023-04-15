@@ -8,3 +8,4 @@ export const updateTask = createAction('[Task] Update Task', props<{ task: Task 
 export const removeTask = createAction('[Task] Remove Task', props<{ task: Task }>());
 export const removeAllTask = createAction('[Task] Remove All Tasks');
 export const setLoading = createAction('[Task] Set Load', props<{ loading: boolean }>());
+export const setError = createAction('[Task] Set Error', props<{ error: string }>());

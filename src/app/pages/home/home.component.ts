@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { TaskStoreState, getTask } from 'src/app/store';
+import { TaskStoreState } from 'src/app/store/models';
+import { getTask } from 'src/app/store/selectors';
 
 @Component({
   selector: 'app-home',

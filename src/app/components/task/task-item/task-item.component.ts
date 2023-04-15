@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { map, catchError, of, finalize } from 'rxjs';
 import { TaskHttpService } from 'src/app/http/task.http.service';
 import { Task } from 'src/app/models/task';
-import { TaskStoreState } from 'src/app/store';
-import { editTask, removeTask, setLoading } from 'src/app/store/actions';
+import { editTask, removeTask, setError, setLoading } from 'src/app/store/actions';
+import { TaskStoreState } from 'src/app/store/models';
 
 @Component({
   selector: 'app-task-item',
@@ -25,7 +25,7 @@ export class TaskItemComponent {
       .remove(this.task._id)
       .pipe(
         map(() => this.store.dispatch(removeTask({ task: this.task }))),
-        catchError(err => of(alert(err.message))),
+        catchError(error => of(this.store.dispatch(setError({ error: error.message })))),
         finalize(() => this.store.dispatch(setLoading({ loading: false })))
       )
       .subscribe();

@@ -3,8 +3,9 @@ import { Store } from '@ngrx/store';
 import { map, catchError, of, finalize } from 'rxjs';
 import { TaskHttpService } from 'src/app/http/task.http.service';
 import { Task } from 'src/app/models/task';
-import { TaskStoreState, getTasks } from 'src/app/store';
-import { getAllTask, setLoading } from 'src/app/store/actions';
+import { getAllTask, setError, setLoading } from 'src/app/store/actions';
+import { TaskStoreState } from 'src/app/store/models';
+import { getTasks } from 'src/app/store/selectors';
 
 @Component({
   selector: 'app-task-list',
@@ -23,7 +24,7 @@ export class TaskListComponent implements OnInit {
       .getAll()
       .pipe(
         map(res => this.store.dispatch(getAllTask({ tasks: res }))),
-        catchError(err => of(alert(err.message))),
+        catchError(error => of(this.store.dispatch(setError({ error: error.message })))),
         finalize(() => this.store.dispatch(setLoading({ loading: false })))
       )
       .subscribe();

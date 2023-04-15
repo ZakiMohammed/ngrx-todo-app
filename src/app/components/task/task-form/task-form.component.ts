@@ -3,8 +3,10 @@ import { Store } from '@ngrx/store';
 import { map, catchError, of, finalize } from 'rxjs';
 import { TaskHttpService } from 'src/app/http/task.http.service';
 import { Task } from 'src/app/models/task';
-import { TaskStoreState, getTask } from 'src/app/store';
-import { addTask, setLoading, updateTask } from 'src/app/store/actions';
+import { addTask, setError, setLoading, updateTask } from 'src/app/store/actions';
+import { TaskStoreState } from 'src/app/store/models';
+import { getTask } from 'src/app/store/selectors';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-task-form',
@@ -31,7 +33,7 @@ export class TaskFormComponent {
 
     if (!this.task) {
       const newTask: Task = {
-        _id: '',
+        _id: uuid(),
         title: this.title,
       };
 
@@ -42,7 +44,7 @@ export class TaskFormComponent {
             this.store.dispatch(addTask({ task }));
             this.title = '';
           }),
-          catchError(err => of(alert(err.message))),
+          catchError(error => of(this.store.dispatch(setError({ error: error.message })))),
           finalize(() => this.store.dispatch(setLoading({ loading: false })))
         )
         .subscribe();
@@ -56,7 +58,7 @@ export class TaskFormComponent {
             this.store.dispatch(updateTask({ task }));
             this.title = '';
           }),
-          catchError(err => of(alert(err.message))),
+          catchError(error => of(this.store.dispatch(setError({ error: error.message })))),
           finalize(() => this.store.dispatch(setLoading({ loading: false })))
         )
         .subscribe();

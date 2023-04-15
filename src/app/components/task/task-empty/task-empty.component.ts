@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Task } from 'src/app/models/task';
-import { TaskStoreState, getTasks } from 'src/app/store';
+import { TaskStoreState } from 'src/app/store/models';
+import { getTasks } from 'src/app/store/selectors';
 
 @Component({
   selector: 'app-task-empty',

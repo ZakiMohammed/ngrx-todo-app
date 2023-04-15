@@ -9,6 +9,7 @@
     - CARD
     - EMPTY
     - CLEAR
+    - ERROR
     - LOADER
 */
 
@@ -169,6 +170,12 @@ body {
   }
 }
 
+.form-sub {
+  display: flex;
+  justify-content: space-between;
+  align-content: flex-start;
+}
+
 /* CARD
 ---------------------------------------------------------------------- */
 .card {
@@ -260,13 +267,20 @@ body {
   font-size: 12px;
   padding: 0;
   color: #777;
-  text-align: right;
-  width: 100%;
   cursor: pointer;
+  height: fit-content;
 }
 
 .btn-clear svg path {
   fill: #777;
+}
+
+/* ERROR
+---------------------------------------------------------------------- */
+.error {
+  color: #ff7675;
+  font-size: 12px;
+  width: 80%;
 }
 
 /* LOADER
